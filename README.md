@@ -84,31 +84,6 @@ riegel  IN      A       10.7.4.1 ;p lawine
 
 ![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/1434db3b-126e-4a5d-b0d1-c22db986b931)
 
-
-![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/e153b4cc-c17f-4ce5-8f80-bc6a94d9e1ab)
-
-```bash
-echo nameserver 192.168.122.1 > /etc/resolv.conf
-
-apt-get update
-
-wait
-
-apt-get install bind9 -y
-
-mkdir /etc/bind/jarkom
-
-cp named.conf.local /etc/bind/
-
-cp canyon.a16.com /etc/bind/jarkom/
-
-cp channel.a16.com /etc/bind/jarkom/
-
-cp ./named.conf.options /etc/bind/
-
-service bind9 restart
-```
-
 ## (1) Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.
 
 ![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/91f2dbda-5d69-44d5-ad84-3038f4078c73)
@@ -249,6 +224,30 @@ iface eth0 inet dhcp
 ```bash
 auto eth0
 iface eth0 inet dhcp
+```
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/e153b4cc-c17f-4ce5-8f80-bc6a94d9e1ab)
+
+```bash
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+apt-get update
+
+wait
+
+apt-get install bind9 -y
+
+mkdir /etc/bind/jarkom
+
+cp named.conf.local /etc/bind/
+
+cp canyon.a16.com /etc/bind/jarkom/
+
+cp channel.a16.com /etc/bind/jarkom/
+
+cp ./named.conf.options /etc/bind/
+
+service bind9 restart
 ```
 
 **Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80 (2)**
