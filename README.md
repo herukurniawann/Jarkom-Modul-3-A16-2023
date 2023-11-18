@@ -39,7 +39,7 @@ zone "channel.a16.com" {
 };
 ```
 
-Isi file /etc/bind/riegel/riegel.canyon.a16.com :
+Isi file `/etc/bind/riegel/riegel.canyon.a16.com` :
 
 ![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/1434db3b-126e-4a5d-b0d1-c22db986b931)
 
