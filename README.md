@@ -60,7 +60,9 @@ $TTL    604800
 riegel  IN      A       10.7.3.1 ;p lawine
 @       IN      AAAA    ::1
 ```
+Isi file `/etc/bind/riegel/riegel.canyon.a16.com` :
 
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/1434db3b-126e-4a5d-b0d1-c22db986b931)
 
 
 ![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/e153b4cc-c17f-4ce5-8f80-bc6a94d9e1ab)
