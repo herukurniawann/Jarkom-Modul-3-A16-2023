@@ -21,6 +21,71 @@ dengan ketentuan sebagai berikut:
 
 Pastikan domain riegel.canyon.a16.com diarahkan ke worker Laravel bernama Fern dengan alamat IP tetap `192.184.4.1`. Selain itu, atur domain `granz.channel.b12.com` agar mengarah pada worker PHP yang disebut Lugner dengan alamat IP tetap `192.184.3.1.` Semua klien harus mengadopsi konfigurasi dari DHCP Server agar terhubung dengan lancar.
 
+**Heiter (DNS Server) Disimpan script.sh pada root, berisi :**
+
+Isi file `/etc/bind/named.conf.local`
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/05c852c9-61de-4762-a954-6cd14f5e75b9)
+
+```bash
+zone "canyon.a16.com" {
+        type master;
+        file "/etc/bind/jarkom/canyon.a16.com";
+};
+
+zone "channel.a16.com" {
+        type master;
+        file "/etc/bind/jarkom/channel.a16.com";
+};
+```
+
+Isi file /etc/bind/riegel/riegel.canyon.a16.com :
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/1434db3b-126e-4a5d-b0d1-c22db986b931)
+
+```bash
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     canyon.a16.com. root.canyon.a16.com. (
+                        2023141101      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      canyon.a16.com.
+@       IN      A       10.7.2.1 ;ip load balancer
+riegel  IN      A       10.7.3.1 ;p lawine
+@       IN      AAAA    ::1
+```
+
+
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/e153b4cc-c17f-4ce5-8f80-bc6a94d9e1ab)
+
+```bash
+echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+apt-get update
+
+wait
+
+apt-get install bind9 -y
+
+mkdir /etc/bind/jarkom
+
+cp named.conf.local /etc/bind/
+
+cp canyon.a16.com /etc/bind/jarkom/
+
+cp channel.a16.com /etc/bind/jarkom/
+
+cp ./named.conf.options /etc/bind/
+
+service bind9 restart
+```
 
 ## (1) Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.
 
