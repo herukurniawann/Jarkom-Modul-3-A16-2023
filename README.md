@@ -22,7 +22,7 @@ dengan ketentuan sebagai berikut:
 Pastikan domain riegel.canyon.a16.com diarahkan ke worker Laravel bernama Fern dengan alamat IP tetap `192.184.4.1`. Selain itu, atur domain `granz.channel.b12.com` agar mengarah pada worker PHP yang disebut Lugner dengan alamat IP tetap `192.184.3.1.` Semua klien harus mengadopsi konfigurasi dari DHCP Server agar terhubung dengan lancar.
 
 
-## (1) Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.**
+## (1) Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.
 
 ![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/91f2dbda-5d69-44d5-ad84-3038f4078c73)
 
