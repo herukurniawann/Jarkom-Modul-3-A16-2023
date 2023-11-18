@@ -60,7 +60,27 @@ $TTL    604800
 riegel  IN      A       10.7.3.1 ;p lawine
 @       IN      AAAA    ::1
 ```
-Isi file `/etc/bind/riegel/riegel.canyon.a16.com` :
+Isi file `/etc/bind/riegel/riegel.channel.a16.com` :
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/74573161-2d9d-4020-bb09-04a1e0e52439)
+
+```bash
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     canyon.a16.com. root.canyon.a16.com. (
+                        2023141101      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      canyon.a16.com.
+@       IN      A       10.7.2.1 ;ip load balancer
+riegel  IN      A       10.7.4.1 ;p lawine
+@       IN      AAAA    ::1
+```
 
 ![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/1434db3b-126e-4a5d-b0d1-c22db986b931)
 
