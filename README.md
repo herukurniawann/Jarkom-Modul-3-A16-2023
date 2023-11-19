@@ -373,3 +373,13 @@ options {
 };
 ```
 Kemudian, mulai ulang `bind9`. Ketika kita memeriksa `/etc/resolv.conf` pada setiap node klien, mereka harus menunjuk pada alamat IP Heiter
+
+## Soal 6
+
+## Soal 7
+
+## Soal 8
+
+## Soal 9
+
+## Soal 10
