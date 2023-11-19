@@ -396,6 +396,11 @@ Selanjutnya kita download file zip dari `Google Drive`, `unzip`, lalu pindahkan 
 -Grafik request per second untuk masing masing algoritma. 
 -Analisis (8)**
 
+
+
+## Soal 9
+**Dengan menggunakan algoritma Round Robin, lakukan testing dengan menggunakan 3 worker, 2 worker, dan 1 worker sebanyak 100 request dengan 10 request/second, kemudian tambahkan grafiknya pada grimoire. (9)**
+
 **Hasil Benchmark**
 
 **1. Round Robin Biasa**
@@ -492,8 +497,6 @@ Weighted Round Robin memiliki performa sedikit lebih baik dari Round Robin biasa
 
 Round Robin mendistribusikan permintaan secara berurutan di antara server dalam sebuah kelompok. Setelah mencapai akhir kelompok, algoritma ini mulai lagi dari awal.
 Weighted Round Robin memberikan bobot kepada setiap server berdasarkan kapasitasnya. Server dengan bobot lebih tinggi menerima lebih banyak koneksi daripada yang berbobot rendah. Least Connections mengarahkan lalu lintas ke server dengan jumlah koneksi aktif paling sedikit, yang bisa menguntungkan jika ada server dengan karakteristik kinerja yang berbeda. IP Hash menggunakan hash dari alamat IP klien untuk menentukan server mana yang menerima permintaan, memastikan klien secara konsisten mencapai server yang sama. Generic Hash bisa menjadi mekanisme hashing apa pun yang mendistribusikan permintaan masuk berdasarkan nilai hash yang dihitung, seperti hash dari sesi atau parameter, yang dapat mendistribusikan beban lebih merata. Berdasarkan data, untuk sistem yang memprioritaskan throughput dan keandalan, algoritma Generic Hash akan menjadi pilihan terbaik karena performa tinggi dan tidak adanya permintaan gagal. 
-
-## Soal 9
 
 ## Soal 10
 
