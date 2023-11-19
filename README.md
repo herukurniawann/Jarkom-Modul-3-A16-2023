@@ -383,3 +383,23 @@ Kemudian, mulai ulang `bind9`. Ketika kita memeriksa `/etc/resolv.conf` pada set
 ## Soal 9
 
 ## Soal 10
+
+## Soal 11
+
+## Soal 12
+
+## Soal 13
+
+## Soal 14
+
+## Soal 15
+
+## Soal 16
+
+## Soal 17
+
+## Soal 18
+
+## Soal 19
+
+## Soal 20
