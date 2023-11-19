@@ -593,33 +593,266 @@ Ketika sudah berhasil. Jika tidak memberikan kredensial yang benar saat membuka 
 
 ## Soal 11
 **Lalu buat untuk setiap request yang mengandung /its akan di proxy passing menuju halaman https://www.its.ac.id. (11) hint: (proxy_pass)**
+Sebelum melanjutkan dengan konfigurasi, penting untuk menyelesaikan pengaturan yang diperlukan. 
+Skrip Konfigurasi:
+```bash
+upstream worker {
+    server 10.7.3.1;
+    server 10.7.3.2;
+    server 10.7.3.3;
+}
+
+server {
+    listen 80;
+    server_name granz.channel.a16.com www.granz.channel.a16.com;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    location / {
+        proxy_pass http://worker;
+    }
+
+    location ~ /its {
+        proxy_pass https://www.its.ac.id;
+        proxy_set_header Host www.its.ac.id;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+```
+Konfigurasi ini bertujuan agar setiap permintaan yang memuat "/its" akan diteruskan ke situs https://www.its.ac.id melalui proxy_pass. Hal ini memastikan bahwa ketika akses ke endpoint yang mengandung "/its" dijalankan, ia akan langsung diarahkan oleh proxy_pass ke situs ITS.
+
+***Testing***
+Untuk melakukan pengujian, gunakan perintah berikut pada klien Revolte:
+```bash
+lynx www.granz.channel.a16.com/its
+```
 
 
 ## Soal 12
 **Selanjutnya LB ini hanya boleh diakses oleh client dengan IP [Prefix IP].3.69, [Prefix IP].3.70, [Prefix IP].4.167, dan [Prefix IP].4.168. (12) hint: (fixed in dulu clinetnya)**
+Sebelumnya diperlukan penyiapan dasar sebelum erubah konfigurasi nginx. Kami memperbarui konfigurasi NGinx untuk membatasi akses hanya pada beerap IP tertentu dan mengatur proxy passing. Berikut adalah skripnya:
+```bash
+upstream worker {
+    server 10.7.3.1;
+    server 10.7.3.2;
+    server 10.7.3.3;
+}
+
+server {
+    listen 80;
+    server_name granz.channel.a16.com www.granz.channel.a16.com;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    location / {
+        allow 10.7.3.69;
+        allow 10.7.3.70;
+        allow 10.7.4.167;
+        allow 10.7.4.168;
+        deny all;
+        proxy_pass http://worker;
+    }
+
+    location /its {
+        proxy_pass https://www.its.ac.id;
+        proxy_set_header Host www.its.ac.id;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+Skrip di atas menetapkan bahwa hanya beberapa alamat IP spesifik yang diizinkan untuk mengakses server. Semua IP lainnya akan diblokir. Pengaturan ini dilakukan di bagian location / dalam konfigurasi Nginx.
+
+***Testing***
+Untuk memastikan konfigurasi berfungsi, akses server menggunakan salah satu IP yang diizinkan: 10.7.3.69, 10.7.3.70, 10.7.4.167, atau 10.7.4.168. Akses dari IP lain akan ditolak.
+
+***Penyesuian konfigurasi untuk alamat IP tambahan***
+Mengingat distribusi IP yang acak, kami memutuskan untuk menambahkan alamat IP tambahan, yaitu 10.7.3.19, ke dalam konfigurasi Nginx yang telah ada. Berikut adalah pembaruan pada konfigurasi:
+```bash
+location / {
+    allow 10.7.3.69;
+    allow 10.7.3.70;
+    allow 10.7.3.19;  # IP baru yang ditambahkan
+    allow 10.7.4.167;
+    allow 10.7.4.168;
+    deny all;
+    proxy_pass http://worker;
+}
+```
+Perubahan ini memungkinkan akses dari IP tambahan tersebut sambil mempertahankan pembatasan untuk IP lainnya.
+
+***Mengatur Alamat IP Tetap pada Klien***
+Sebagai alternatif, kita bisa mengatur alamat IP tetap pada klien Revolte dengan menambahkan konfigurasi berikut pada server DHCP:
+```bash
+host Revolte {
+    hardware ethernet fe:c0:13:f5:1c:02;
+    fixed-address 10.7.3.69;
+}
+```
+Dengan cara ini, klien Revolte akan selalu menerima alamat IP 10.7.3.69, memastikan konsistensi akses tanpa perlu menyesuaikan konfigurasi Nginx secara berulang.
 
 
 ## Soal 13
 **Karena para petualang kehabisan uang, mereka kembali bekerja untuk mengatur riegel.canyon.yyy.com.
 Semua data yang diperlukan, diatur pada Denken dan harus dapat diakses oleh Frieren, Flamme, dan Fern. (13)**
+Konfigurasi MySQL:
+```bash
+echo '
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mariadb.conf.d/
 
+# Opsi yang mempengaruhi server MySQL (mysqld)
+[mysqld]
+skip-networking=0
+skip-bind-address
+' > /etc/mysql/my.cnf
+cd /etc/mysql/mariadb.conf.d/
+sed -i 's/^bind-address\s*=.*/bind-address = 0.0.0.0/' 50-server.cnf
+
+service mysql restart
+mysql -u root -p
+Enter password:
+
+CREATE USER 'kelompoka16'@'%' IDENTIFIED BY 'passworda16';
+CREATE USER 'kelompoka16'@'localhost' IDENTIFIED BY 'passworda16';
+CREATE DATABASE dbkelompoka16;
+GRANT ALL PRIVILEGES ON *.* TO 'kelompoka16'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'kelompoka16'@'localhost';
+FLUSH PRIVILEGES;
+
+```
+***Verifikasi***
+Untuk memastikan konfigurasi berjalan dengan baik, lakukan pengecekan pada salah satu worker Laravel. Sebagai contoh, kita akan memeriksa pada worker Fern dengan perintah berikut:
+```bash
+mariadb --host=10.7.2.1 --port=3306 --user=kelompoka16 --password=passworda16 dbkelompoka16 -e "SHOW DATABASES;"
+```
 
 ## Soal 14
 **Frieren, Flamme, dan Fern memiliki Riegel Channel sesuai dengan quest guide berikut. Jangan lupa melakukan instalasi PHP8.0 dan Composer (14)**
+Diperlukan penginstalan composer dan git:
+```bash
+wget https://getcomposer.org/download/2.0.13/composer.phar
+chmod +x composer.phar
+mv composer.phar /usr/local/bin/composer
+apt-get install git -y
+cd /var/www && git clone https://github.com/martuafernando/laravel-praktikum-jarkom
+cd /var/www/laravel-praktikum-jarkom && composer update
+```
+Konfigurasi nginx:
+```
+echo 'server {
+    listen <X>;
 
+    root /var/www/laravel-praktikum-jarkom/public;
+
+    index index.php index.html index.htm;
+    server_name _;
+
+    location / {
+            try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+      include snippets/fastcgi-php.conf;
+      fastcgi_pass unix:/var/run/php/php8.0-fpm.sock;
+    }
+
+    location ~ /\.ht {
+            deny all;
+    }
+
+    error_log /var/log/nginx/implementasi_error.log;
+    access_log /var/log/nginx/implementasi_access.log;
+}' > /etc/nginx/sites-available/laravel-worker
+```
+
+***Konfigurasi aplikasi laravel***
+```bash
+cd /var/www/laravel-praktikum-jarkom && cp .env.example .env
+# Tambahkan konfigurasi DB dan aplikasi ke file .env
+cd /var/www/laravel-praktikum-jarkom
+php artisan key:generate
+php artisan config:cache
+php artisan migrate
+php artisan db:seed
+php artisan storage:link
+php artisan jwt:secret
+php artisan config:clear
+chown -R www-data.www-data /var/www/laravel-praktikum-jarkom/storage
+```
+***Testing***
+```bash
+lynx localhost:[PORT]
+# Ganti [PORT] dengan 8001, 8002, atau 8003 sesuai setup nginx.
+```
 ## Soal 15
 **Riegel Channel memiliki beberapa endpoint yang harus ditesting sebanyak 100 request dengan 10 request/second. Tambahkan response dan hasil testing pada grimoire.
 POST /auth/register (15)**
-
+Sebelum melakukan testing, kita perlu menyiapkan file .json yang akan digunakan sebagai body untuk request ke endpoint /api/auth/register.
+```bash
+echo '
+{
+  "username": "kelompoka16",
+  "password": "passworda16"
+}' > register.json
+```
+***Testing***
+Dari sii client Revolte, perintah Apache Benchmark dilakukan untuk testing:
+```bash
+ab -n 100 -c 10 -p register.json -T application/json http://10.7.4.1:8001/api/auth/register
+```
 
 ## Soal 16
 **POST /auth/login (16)**
+Sebelum melakukan testing, kita perlu menyiapkan file .json yang akan digunakan sebagai body untuk request ke endpoint /api/auth/register.
+```bash
+echo '
+{
+  "username": "kelompoka16",
+  "password": "passworda16"
+}' > register.json
+```
+***Testing***
+Dari sii client Revolte, perintah Apache Benchmark dilakukan untuk testing:
+```bash
+ab -n 100 -c 10 -p login.json -T application/json http://10.7.4.1:8001/api/auth/login
+```
+
 
 ## Soal 17
 **GET /me (17)**
+Pertama, kelompok ami menggunakan curl untuk mengirim permintaan POST ke endpoint login Laravel dengan isi dari file login.json, menyimpan respons yang berisi token otentikasi ke dalam file login_output.txt. Kemudian, ekstrak token tersebut menggunakan jq dan simpan ke dalam variabel token. Lalu digunakna Apache Benchmark (ab) untuk mengirim 100 permintaan secara bersamaan (10 permintaan concurrent) ke endpoint /api/me server Laravel, dengan header Authorization yang menyertakan token Bearer. Tujuannya adalah untuk menilai kemampuan server dalam menangani beban permintaan dengan otentikasi.
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d @login.json http://10.7.4.1:8001/api/auth/login > login_output.txt
+token=$(cat login_output.txt | jq -r '.token')
+```
+
+Testing:
+```bash
+ab -n 100 -c 10 -H "Authorization: Bearer $token" http://10.7.4.1:8001/api/me
+```
+
 
 ## Soal 18
 **Untuk memastikan ketiganya bekerja sama secara adil untuk mengatur Riegel Channel maka implementasikan Proxy Bind pada Eisen untuk mengaitkan IP dari Frieren, Flamme, dan Fern. (18)**
+Untuk melakukan testing server Laravel menggunakan Apache Benchmark, prosesnya dimulai dengan pengambilan token autentikasi. Skrip kami menggunakan curl untuk mengirim permintaan POST ke endpoint login Laravel (http://10.7.4.1:8001/api/auth/login) dengan data yang diambil dari file login.json. Respon dari permintaan ini, yang mengandung token autentikasi, disimpan ke dalam file login_output.txt.
+
+Skrip:
+```bash
+curl -X POST -H "Content-Type: application/json" -d @login.json http://10.7.4.1:8001/api/auth/login > login_output.txt
+```
+Kemudian token diekstrak dan disimpan dalam vairabelnya. Kemudian, Apache Benchmark digunakan untuk mengirim 100 permintaan ke endpoint /api/me dari server Laravel. Permintaan ini dilakukan dengan 10 permintaan yang dijalankan secara bersamaan (concurrent), dengan masing-masing permintaan menyertakan token autentikasi yang diperoleh sebelumnya dalam header Authorization.
+
+Testing:
+ab -n 100 -c 10 -H "Authorization: Bearer $token" http://10.7.4.1:8001/api/me
+
 
 ## Soal 19
 **Untuk meningkatkan performa dari Worker, coba implementasikan PHP-FPM pada Frieren, Flamme, dan Fern. Untuk testing kinerja naikkan**
@@ -628,12 +861,145 @@ POST /auth/register (15)**
 - pm.min_spare_servers
 - pm.max_spare_servers
 **sebanyak tiga percobaan dan lakukan testing sebanyak 100 request dengan 10 request/second kemudian berikan hasil analisisnya pada Grimoire.(19)**
+Untuk meningkatkan performa worker Laravel (Fern, Flamme, dan Frieren), kami mengimplementasikan PHP-FPM dengan berbagai konfigurasi. Proses ini melibatkan penyesuaian pengaturan PHP-FPM untuk mengoptimalkan penanganan permintaan. Empat skrip berbeda disiapkan, masing-masing dengan konfigurasi PHP-FPM yang berbeda, bertujuan untuk menilai dampak perubahan konfigurasi terhadap performa server.
+
+```bash
+# Skrip Konfigurasi PHP-FPM untuk Meningkatkan Performa Worker
+
+# Konfigurasi 1
+echo '[www]
+user = www-data
+group = www-data
+listen = /run/php/php8.0-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
+php_admin_flag[allow_url_fopen] = off
+
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3' > /etc/php/8.0/fpm/pool.d/www.conf
+service php8.0-fpm restart
+
+# Tunggu beberapa saat sebelum menjalankan konfigurasi berikutnya
+
+# Konfigurasi 2
+echo '[www]
+user = www-data
+group = www-data
+listen = /run/php/php8.0-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
+php_admin_flag[allow_url_fopen] = off
+
+pm = dynamic
+pm.max_children = 25
+pm.start_servers = 5
+pm.min_spare_servers = 3
+pm.max_spare_servers = 10' > /etc/php/8.0/fpm/pool.d/www.conf
+service php8.0-fpm restart
+
+# Tunggu beberapa saat sebelum menjalankan konfigurasi berikutnya
+
+# Konfigurasi 3
+echo '[www]
+user = www-data
+group = www-data
+listen = /run/php/php8.0-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
+php_admin_flag[allow_url_fopen] = off
+
+pm = dynamic
+pm.max_children = 50
+pm.start_servers = 8
+pm.min_spare_servers = 5
+pm.max_spare_servers = 15' > /etc/php/8.0/fpm/pool.d/www.conf
+service php8.0-fpm restart
+
+# Tunggu beberapa saat sebelum menjalankan konfigurasi berikutnya
+
+# Konfigurasi 4
+echo '[www]
+user = www-data
+group = www-data
+listen = /run/php/php8.0-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
+php_admin_flag[allow_url_fopen] = off
+
+pm = dynamic
+pm.max_children = 75
+pm.start_servers = 10
+pm.min_spare_servers = 5
+pm.max_spare_servers = 20' > /etc/php/8.0/fpm/pool.d/www.conf
+service php8.0-fpm restart
+
+```
+Setiap skrip ini akan diuji dengan Apache Benchmark, mengirim 100 request dengan 10 request/detik, untuk menganalisis perbedaan performa antara konfigurasi ini. Analisis ini akan membantu dalam menentukan konfigurasi mana yang paling efektif untuk penanganan beban permintaan pada server. Hasil dari setiap konfigurasi ini akan memberikan data yang penting untuk memahami bagaimana penyesuaian PHP-FPM dapat mempengaruhi kinerja server dalam kondisi beban berbeda.
+
 
 ## Soal 20
 **Nampaknya hanya menggunakan PHP-FPM tidak cukup untuk meningkatkan performa dari worker maka implementasikan Least-Conn pada Eisen. Untuk testing kinerja dari worker tersebut dilakukan sebanyak 100 request dengan 10 request/second. (20)**
 
+skrip konfigurasi:
+```
+# Konfigurasi PHP-FPM pada Worker
+echo '[www]
+user = www-data
+group = www-data
+listen = /run/php/php8.0-fpm.sock
+listen.owner = www-data
+listen.group = www-data
+php_admin_value[disable_functions] = exec,passthru,shell_exec,system
+php_admin_flag[allow_url_fopen] = off
+
+pm = dynamic
+pm.max_children = 75
+pm.start_servers = 10
+pm.min_spare_servers = 5
+pm.max_spare_servers = 20' > /etc/php/8.0/fpm/pool.d/www.conf
+
+service php8.0-fpm restart
+
+# Konfigurasi Least-Connection pada Load Balancer Nginx
+echo 'upstream worker {
+    least_conn;
+    server 10.7.4.1:8001;
+    server 10.7.4.2:8002;
+    server 10.7.4.3:8003;
+}
+
+server {
+    listen 80;
+    server_name riegel.canyon.a16.com www.riegel.canyon.a16.com;
+
+    location / {
+        proxy_pass http://worker;
+    }
+}' > /etc/nginx/sites-available/laravel-worker
+
+service nginx restart
+
+```
+
+Peningkatan performa worker Laravel tidak hanya bergantung pada konfigurasi PHP-FPM, tetapi juga pada strategi load balancing yang digunakan. Dalam kasus ini, algoritma Least-Connection diimplementasikan pada load balancer Eisen. Algoritma ini bertujuan untuk mendistribusikan beban kerja secara lebih efisien dengan memprioritaskan server yang memiliki jumlah koneksi aktif paling sedikit. Dengan demikian, setiap request baru akan dialihkan ke server yang paling sedikit beban kerjanya, mengurangi kemungkinan beberapa server mengalami beban tinggi sementara yang lainnya kurang dimanfaatkan.
+
+Konfigurasi nginx untuk implementasi Least-Connection pada load balancer Eisen dilakukan dengan menambahkan least_conn pada blok upstream dalam file konfigurasi nginx. Server-server yang tersedia dalam kluster (10.7.4.1:8001, 10.7.4.2:8002, dan 10.7.4.3:8003) diatur di bawah directive least_conn, yang memungkinkan nginx untuk mengalokasikan request ke server dengan jumlah koneksi terkecil. Setelah konfigurasi ini diterapkan, nginx di-restart untuk memastikan perubahan diterapkan.
+
+Konfigurasi ini masih tetap menggunakan pengaturan PHP-FPM yang sebelumnya telah ditentukan, termasuk pm.max_children = 75, pm.start_servers = 10, pm.min_spare_servers = 5, dan pm.max_spare_servers = 20. Pengaturan ini, bersama dengan strategi load balancing yang baru, diharapkan dapat meningkatkan performa keseluruhan dari kluster server.
+
+Dengan penggunaan Least-Connection di load balancer, setiap server dalam kluster memiliki peluang yang lebih seimbang untuk menangani permintaan, mencegah situasi di mana beberapa server mungkin kelebihan beban sementara yang lainnya kurang dimanfaatkan.
+
 
 ## Kendala 
+Menghadapi kendala kapasitas CPU yang terbatas menjadi tantangan utama bagi kelompok kami selama pengerjaan praktikum dan fase testing kode. Masalah ini terutama berakar pada keterbatasan hardware yang kami gunakan, dimana CPU seringkali tidak mampu menangani beban kerja yang dibutuhkan untuk tugas-tugas yang kompleks. Akibatnya, kami mengalami berbagai error yang berulang kali terjadi selama proses pengembangan dan pengujian, yang sangat mengganggu kelancaran pengerjaan.
 
-1. Untuk Soal 2,3 & 5 terkadang saat melakukan config lalu di tes masih failed
-2. Sinyal jaringan terkadang lambat sehingga waktu pengecekkan `ping google.com` tidak jalan
+Dampak dari keterbatasan CPU ini cukup signifikan. Salah satunya adalah kebutuhan untuk sering kali memindahkan pekerjaan dari satu laptop ke laptop lain yang memiliki spesifikasi lebih mampu. Proses ini tidak hanya menyita waktu, tetapi juga menimbulkan tantangan tambahan seperti perbedaan lingkungan pengembangan antara dua perangkat. Inkonsistensi ini bisa menghasilkan perbedaan dalam hasil testing atau bahkan kesalahan dalam kompatibilitas kode.
+
+Kendala kapasitas CPU ini juga membatasi kemampuan kami untuk melakukan eksperimen dengan berbagai skenario aplikasi, terutama dalam situasi yang memerlukan penggunaan sumber daya komputasi yang tinggi. Hal ini mengurangi efektivitas pengujian kami dan membatasi pemahaman kami tentang performa aplikasi di bawah kondisi beban kerja yang beragam.
