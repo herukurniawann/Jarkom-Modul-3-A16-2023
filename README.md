@@ -540,21 +540,48 @@ Ketika sudah berhasil. Jika tidak memberikan kredensial yang benar saat membuka 
 `lynx -auth=netics:ajka16 http://10.7.2.2/`
 
 ## Soal 11
+**Lalu buat untuk setiap request yang mengandung /its akan di proxy passing menuju halaman https://www.its.ac.id. (11) hint: (proxy_pass)**
+
 
 ## Soal 12
+**Selanjutnya LB ini hanya boleh diakses oleh client dengan IP [Prefix IP].3.69, [Prefix IP].3.70, [Prefix IP].4.167, dan [Prefix IP].4.168. (12) hint: (fixed in dulu clinetnya)**
+
 
 ## Soal 13
+**Karena para petualang kehabisan uang, mereka kembali bekerja untuk mengatur riegel.canyon.yyy.com.
+Semua data yang diperlukan, diatur pada Denken dan harus dapat diakses oleh Frieren, Flamme, dan Fern. (13)**
+
 
 ## Soal 14
+**Frieren, Flamme, dan Fern memiliki Riegel Channel sesuai dengan quest guide berikut. Jangan lupa melakukan instalasi PHP8.0 dan Composer (14)**
 
 ## Soal 15
+**Riegel Channel memiliki beberapa endpoint yang harus ditesting sebanyak 100 request dengan 10 request/second. Tambahkan response dan hasil testing pada grimoire.
+POST /auth/register (15)**
+
 
 ## Soal 16
+**POST /auth/login (16)**
 
 ## Soal 17
+**GET /me (17)**
 
 ## Soal 18
+**Untuk memastikan ketiganya bekerja sama secara adil untuk mengatur Riegel Channel maka implementasikan Proxy Bind pada Eisen untuk mengaitkan IP dari Frieren, Flamme, dan Fern. (18)**
 
 ## Soal 19
+**Untuk meningkatkan performa dari Worker, coba implementasikan PHP-FPM pada Frieren, Flamme, dan Fern. Untuk testing kinerja naikkan**
+- pm.max_children
+- pm.start_servers
+- pm.min_spare_servers
+- pm.max_spare_servers
+**sebanyak tiga percobaan dan lakukan testing sebanyak 100 request dengan 10 request/second kemudian berikan hasil analisisnya pada Grimoire.(19)**
 
 ## Soal 20
+**Nampaknya hanya menggunakan PHP-FPM tidak cukup untuk meningkatkan performa dari worker maka implementasikan Least-Conn pada Eisen. Untuk testing kinerja dari worker tersebut dilakukan sebanyak 100 request dengan 10 request/second. (20)**
+
+
+## Kendala 
+
+1. Untuk Soal 2,3 & 5 terkadang saat melakukan config lalu di tes masih failed
+2. Sinyal jaringan terkadang lambat sehingga waktu pengecekkan `ping google.com` tidak jalan
