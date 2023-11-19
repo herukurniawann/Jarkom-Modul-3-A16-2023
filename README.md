@@ -395,6 +395,13 @@ Linie, 2GB, 2vCPU, dan 50 GB SSD.
 Lugner 1GB, 1vCPU, dan 25 GB SSD.
 aturlah agar Eisen dapat bekerja dengan maksimal, lalu lakukan testing dengan 1000 request dan 100 request/second. (7)**
 
+Langkah untuk menguji penyeimbang Eisen, kita dapat menggunakan utilitas benchmarking yang disediakan oleh Apache. Pertama, instal paket Apache2-utils
+
+`apt install apache2-utils`
+
+Langkah selanjutnya, untuk membuat 1000 permintaan dengan 100 permintaan/detik, gunakan perintah berikut
+
+`ab -n 1000 -c 100 "http://10.7.2.2/"`
 
 ## Soal 8
 **Karena diminta untuk menuliskan grimoire, buatlah analisis hasil testing dengan 200 request dan 10 request/second masing-masing algoritma Load Balancer dengan ketentuan sebagai berikut:
