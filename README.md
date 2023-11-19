@@ -410,6 +410,58 @@ Langkah selanjutnya, untuk membuat 1000 permintaan dengan 100 permintaan/detik, 
 -Grafik request per second untuk masing masing algoritma. 
 -Analisis (8)**
 
+Langkah pertama yang perlu dilakukan benchmarking menggunakan berbagai algoritma loadbalancing yang disediakan oleh `nginx`. kita perlu menambahkan semua algoritma ke dalam konfigurasi nginx di load balancer
+
+Isi file `/etc/nginx/sites-available/loadbalancer`
+
+```bash
+upstream myweb {
+	# Round robin (default)
+	server 10.7.3.1; # IP Lawine
+	server 10.7.3.2; # IP Linie
+	server 10.7.3.3; # IP Lugner
+
+	# Weighted round robin
+	#server 10.7.3.1 weight=5; # IP Lawine
+	#server 10.7.3.2 weight=3; # IP Linie
+	#server 10.7.3.3 weight=1; # IP Lugner
+
+	# Least Connection
+	#least_conn;
+	#server 10.7.3.1; # IP Lawine
+	#server 10.7.3.2; # IP Linie
+	#server 10.7.3.3; # IP Lugner
+
+	# IP Hash
+	#ip_hash;
+	#server 10.7.3.1; # IP Lawine
+	#server 10.7.3.2; # IP Linie
+	#server 10.7.3.3; # IP Lugner
+
+	# Generic Hash
+	#hash $request_uri consistent;
+	#server 10.7.3.1; # IP Lawine
+	#server 10.7.3.2; # IP Linie
+	#server 10.7.3.3; # IP Lugner
+}
+
+server {
+	listen 80 default_server;
+	server_name _;
+
+	location / {
+		proxy_pass http://myweb;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header Host $http_host;
+	}
+}
+```
+Selanjutnya, dengan menggunakan perintah ab, uji penyeimbang sebagai berikut
+
+`ab -n 200 -c 10 "http://10.7.2.2/"`
+
+Selanjutnya setelah dilakukan pengujian, catat penggunaan CPU setiap pekerja menggunakan htop dan hasil benchmark, lalu tambahkan ke grimoire
 
 ## Soal 9
 **Dengan menggunakan algoritma Round Robin, lakukan testing dengan menggunakan 3 worker, 2 worker, dan 1 worker sebanyak 100 request dengan 10 request/second, kemudian tambahkan grafiknya pada grimoire. (9)**
