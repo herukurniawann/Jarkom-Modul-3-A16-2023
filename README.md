@@ -1,4 +1,3 @@
-![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/be76399e-3779-41aa-a02a-ddceb0993b20)# Jarkom-Modul-2-A16-2023
 ## Praktikum Modul 3 Jaringan Komputer
 
 **Kelompok A16 :**
