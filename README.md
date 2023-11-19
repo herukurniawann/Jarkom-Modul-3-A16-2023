@@ -422,32 +422,47 @@ Keterangan
 
 **Round Robin**
 Requests per second: 701.14
+
 Time per request: 1.426ms
+
 Transfer rate: 521.52 KB/sec
+
 Failed requests: 67
 
 **Weighted Round Robin**
 Requests per second: 742.12
+
 Time per request: 1.347ms
+
 Transfer rate: 552.00 KB/sec
+
 Failed requests: 67
 
 **Least Connections**
 Requests per second: 737.89
+
 Time per request: 1.352ms
+
 Transfer rate: 548.86 KB/sec
+
 Failed requests: 65
 
 **IP Hash**
 Requests per second: 749.01
+
 Time per request: 1.335ms
+
 Transfer rate: 557.37 KB/sec
+
 Failed requests: 0
 
 **Generic Hash**
 Requests per second: 842.21
+
 Time per request: 1.187ms
+
 Transfer rate: 626.72 KB/sec
+
 Failed requests: 0
 
 **Grafik**
