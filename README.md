@@ -1,4 +1,4 @@
-# Jarkom-Modul-2-A16-2023
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/be76399e-3779-41aa-a02a-ddceb0993b20)# Jarkom-Modul-2-A16-2023
 ## Praktikum Modul 3 Jaringan Komputer
 
 **Kelompok A16 :**
@@ -252,6 +252,24 @@ cp ./named.conf.options /etc/bind/
 service bind9 restart
 ```
 
+
+**Client mendapatkan DNS dari Heiter dan dapat terhubung dengan internet melalui DNS tersebut (4)**
+
+
+
+## Soal 2,3 & 5
+
+**- Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80 (2)**
+
+**- Client yang melalui Switch4 mendapatkan range IP dari [prefix IP].4.12 - [prefix IP].4.20 dan [prefix IP].4.160 - [prefix IP].4.168 (3)**
+
+**- Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch3 selama 3 menit sedangkan pada client yang melalui Switch4 selama 12 menit. Dengan waktu maksimal dialokasikan untuk peminjaman alamat IP selama 96 menit (5)**
+
+Langkah Pertama, kita perlu menginstal `isc-dhcp-server` di node Himmel. Selanjutnya, letakkan konfigurasi ini ke jalurnya masing-masing.
+
+Kemudian set-up `INTERFACESv4` ke `eth0` karena terhubung melaluinya
+
+
 Isi dari `/etc/default/isc-dhcp-server` :
 
 ```bash
@@ -274,28 +292,10 @@ Isi dari `/etc/default/isc-dhcp-server` :
 INTERFACESv4="eth0"
 INTERFACESv6=""
 ```
+Isi dari `/etc/dhcp/dhcpd.conf` :
 
-
-**Client yang melalui Switch3 mendapatkan range IP dari [prefix IP].3.16 - [prefix IP].3.32 dan [prefix IP].3.64 - [prefix IP].3.80 (2)**
-
-**Client yang melalui Switch4 mendapatkan range IP dari [prefix IP].4.12 - [prefix IP].4.20 dan [prefix IP].4.160 - [prefix IP].4.168 (3)**
-
-**Client mendapatkan DNS dari Heiter dan dapat terhubung dengan internet melalui DNS tersebut (4)**
-
-**Lama waktu DHCP server meminjamkan alamat IP kepada Client yang melalui Switch3 selama 3 menit sedangkan pada client yang melalui Switch4 selama 12 menit. Dengan waktu maksimal dialokasikan untuk peminjaman alamat IP selama 96 menit (5)**
-
-
-Node Himmel 
-
-dhcp.conf
-max-lease-time 7200;
-
-ddns-update-style none;
-
+```bash
 subnet 10.7.1.0 netmask 255.255.255.0 {
-}
-
-subnet 10.7.2.0 netmask 255.255.255.0 {
 }
 
 subnet 10.7.3.0 netmask 255.255.255.0 {
@@ -317,6 +317,32 @@ subnet 10.7.4.0 netmask 255.255.255.0 {
     default-lease-time 720;
     max-lease-time 5760;
 }
+```
+
+isi File `/etc/default/isc-dhcp-relay`
+
+Langkah Berikutnya, menyiapkan DNS Relay di node Aura sehingga server DHCP dapat mendistribusikan IP ke semua klien
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/a0549c4e-0452-4c19-92b8-3a973547341e)
+
+```bash
+# Defaults for isc-dhcp-relay initscript
+# sourced by /etc/init.d/isc-dhcp-relay
+# installed at /etc/default/isc-dhcp-relay by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+# What servers should the DHCP relay forward requests to?
+SERVERS="10.7.1.1"
+
+# On what interfaces should the DHCP relay (dhrelay) serve DHCP requests?
+INTERFACES="eth1 eth2 eth3 eth4"
+
+# Additional options that are passed to the DHCP relay daemon?
+OPTIONS=""
+```
 
 
 
