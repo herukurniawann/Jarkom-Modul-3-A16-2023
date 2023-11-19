@@ -389,13 +389,19 @@ Selanjutnya kita download file zip dari `Google Drive`, `unzip`, lalu pindahkan 
 
 ## Soal 7
 
+**Kepala suku dari Bredt Region memberikan resource server sebagai berikut:
+Lawine, 4GB, 2vCPU, dan 80 GB SSD.
+Linie, 2GB, 2vCPU, dan 50 GB SSD.
+Lugner 1GB, 1vCPU, dan 25 GB SSD.
+aturlah agar Eisen dapat bekerja dengan maksimal, lalu lakukan testing dengan 1000 request dan 100 request/second. (7)**
+
+
 ## Soal 8
 **Karena diminta untuk menuliskan grimoire, buatlah analisis hasil testing dengan 200 request dan 10 request/second masing-masing algoritma Load Balancer dengan ketentuan sebagai berikut:
 -Nama Algoritma Load Balancer
 -Report hasil testing pada Apache Benchmark
 -Grafik request per second untuk masing masing algoritma. 
 -Analisis (8)**
-
 
 
 ## Soal 9
@@ -499,6 +505,8 @@ Round Robin mendistribusikan permintaan secara berurutan di antara server dalam 
 Weighted Round Robin memberikan bobot kepada setiap server berdasarkan kapasitasnya. Server dengan bobot lebih tinggi menerima lebih banyak koneksi daripada yang berbobot rendah. Least Connections mengarahkan lalu lintas ke server dengan jumlah koneksi aktif paling sedikit, yang bisa menguntungkan jika ada server dengan karakteristik kinerja yang berbeda. IP Hash menggunakan hash dari alamat IP klien untuk menentukan server mana yang menerima permintaan, memastikan klien secara konsisten mencapai server yang sama. Generic Hash bisa menjadi mekanisme hashing apa pun yang mendistribusikan permintaan masuk berdasarkan nilai hash yang dihitung, seperti hash dari sesi atau parameter, yang dapat mendistribusikan beban lebih merata. Berdasarkan data, untuk sistem yang memprioritaskan throughput dan keandalan, algoritma Generic Hash akan menjadi pilihan terbaik karena performa tinggi dan tidak adanya permintaan gagal. 
 
 ## Soal 10
+**Selanjutnya coba tambahkan konfigurasi autentikasi di LB dengan dengan kombinasi username: “netics” dan password: “ajkyyy”, dengan yyy merupakan kode kelompok. Terakhir simpan file “htpasswd” nya di /etc/nginx/rahasisakita/ (10)**
+
 
 ## Soal 11
 
