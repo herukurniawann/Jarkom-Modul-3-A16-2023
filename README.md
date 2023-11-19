@@ -228,7 +228,9 @@ auto eth0
 iface eth0 inet dhcp
 ```
 
-Himmel (DHCP Server) : Disimpan `script.sh` pada root, berisi :
+**Register Domain**
+
+Heiter (DNS Server) Disimpan script.sh pada root, berisi :
 
 ![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/e153b4cc-c17f-4ce5-8f80-bc6a94d9e1ab)
 
