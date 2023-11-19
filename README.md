@@ -348,5 +348,28 @@ INTERFACES="eth1 eth2 eth3 eth4"
 OPTIONS=""
 ```
 
+## Soal 4
+**Client mendapatkan DNS dari Heiter dan dapat terhubung dengan internet melalui DNS tersebut (4)**
+
+Semua klien akan mendapatkan akses internet dari DNS Server Heiter. Langkah pertama perlu menyiapkan forwarder di sana. Kita sudah setting DNS servernya di `dhcpd.conf`, sekarang kita bisa setting konfigurasi DNS servernya agar bisa meneruskan koneksi internet.
+
+Isi dari file `/etc/bind/named.conf.options`
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/b523375b-2035-4d9c-8972-358bc9718959)
 
 
+```bash
+options {
+        directory "/var/cache/bind";
+
+        forwarders {
+                192.168.122.1;
+        };
+
+      // dnssec-validation auto;
+        allow-query{any;};
+        auth-nxdomain no;
+        listen-on-v6 { any; };
+};
+```
+Kemudian, mulai ulang `bind9`. Ketika kita memeriksa `/etc/resolv.conf` pada setiap node klien, mereka harus menunjuk pada alamat IP Heiter
