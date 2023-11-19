@@ -16,6 +16,8 @@ dengan ketentuan sebagai berikut:
 ![image](https://github.com/herukurniawann/Jarkom-Modul-2-A16-2023/assets/93961310/3e4bbde9-db85-4dd8-a72c-91ff4cc135f2)
 ![image](https://github.com/herukurniawann/Jarkom-Modul-2-A16-2023/assets/93961310/15cb905f-783a-4d55-888f-03ff51b3374f)
 
+## Soal 0
+
 **Setelah mengalahkan Demon King, perjalanan berlanjut. Kali ini, kalian diminta untuk melakukan register domain berupa riegel.canyon.yyy.com untuk worker Laravel dan granz.channel.yyy.com untuk worker PHP (0) mengarah pada worker yang memiliki IP [prefix IP].x.1.**
 
 Pastikan domain riegel.canyon.a16.com diarahkan ke worker Laravel bernama Fern dengan alamat IP tetap `192.184.4.1`. Selain itu, atur domain `granz.channel.b12.com` agar mengarah pada worker PHP yang disebut Lugner dengan alamat IP tetap `192.184.3.1.` Semua klien harus mengadopsi konfigurasi dari DHCP Server agar terhubung dengan lancar.
@@ -83,10 +85,11 @@ riegel  IN      A       10.7.4.1 ;p lawine
 
 ![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/1434db3b-126e-4a5d-b0d1-c22db986b931)
 
-## (1) Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.
+## Soal 1
+
+(1) Lakukan konfigurasi sesuai dengan peta yang sudah diberikan.
 
 ![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/93961310/91f2dbda-5d69-44d5-ad84-3038f4078c73)
-
 
 **Aura ( Router DHCP Relay )**
 ```bash
