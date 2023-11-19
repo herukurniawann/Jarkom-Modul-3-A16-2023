@@ -514,6 +514,30 @@ Weighted Round Robin memberikan bobot kepada setiap server berdasarkan kapasitas
 ## Soal 10
 **Selanjutnya coba tambahkan konfigurasi autentikasi di LB dengan dengan kombinasi username: “netics” dan password: “ajkyyy”, dengan yyy merupakan kode kelompok. Terakhir simpan file “htpasswd” nya di /etc/nginx/rahasisakita/ (10)**
 
+Hal pertama yang perlu menambahkan autentikasi ke penyeimbang sehingga hanya dapat diakses jika kita dapat memberikan kredensial yang benar. Kita perlu mengatur kredensial dengan `htpasswd`. Jika Anda sudah menginstal paket `Apache2-utils` di mesin Anda, Anda seharusnya sudah memiliki perintahnya.
+
+`htpasswd -c .htpasswd netics`
+
+Selanjutnya, masukkan kata sandi Anda untuk pengguna `netics`. Pada kasus ini adalah ajka16. Lalu pindahkan file password .htpasswd ke direktori `/etc/nginx/rahasiakita/`
+
+```bash
+mkdir -p /etc/nginx/rahasiakita
+mv .htpasswd /etc/nginx/rahasiakita/.htpasswd
+```
+
+Selanjutnya, kita perlu menambahkan baris ini ke konfigurasi penyeimbang `nginx`
+
+Isi file `/etc/nginx/sites-available/loadbalancer`
+
+```bash
+location / {
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/rahasiakita/.htpasswd;
+}
+```
+Ketika sudah berhasil. Jika tidak memberikan kredensial yang benar saat membuka situs web menggunakan `lynx`, kami tidak akan mendapatkan akses ke situs web tersebut. Berikut cara masuk ke situs web menggunakan kredensial.
+
+`lynx -auth=netics:ajka16 http://10.7.2.2/`
 
 ## Soal 11
 
