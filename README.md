@@ -375,6 +375,17 @@ options {
 Kemudian, mulai ulang `bind9`. Ketika kita memeriksa `/etc/resolv.conf` pada setiap node klien, mereka harus menunjuk pada alamat IP Heiter
 
 ## Soal 6
+**Berjalannya waktu, petualang diminta untuk melakukan deployment.
+Pada masing-masing worker PHP, lakukan konfigurasi virtual host untuk website berikut dengan menggunakan php 7.3. (6)**
+
+Langkah pertama yaitu menginstal `wget` dan `unzip` untuk mendownload aset situs web dari Google Drive. Lalu `nginx`, `php`, dan `php-fpm` untuk membuat situs online.
+
+```bash
+apt update
+apt install wget unzip nginx php php-fpm -y
+```
+
+Selanjutnya kita download file zip dari `Google Drive`, `unzip`, lalu pindahkan ke direktori `/var/www`. Kemudian, buat file konfigurasi untuk website, dan letakkan di `/etc/nginx/sites-available/modul-3`
 
 ## Soal 7
 
