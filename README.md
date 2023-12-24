@@ -7,6 +7,12 @@
 | Clarissa Luna Maheswari | 5025211033 |
 | Heru Dwi Kurniawan | 5025211055 
 
+
+## Playlist Hasil Pengerjaan:
+https://youtube.com/playlist?list=PLMXEXbfEMOWKX5JwmY8jEwW7iANhXtQuS&si=2t5ku0gIzH2cTulD
+
+
+
 ## Soal:
 Perjalanan selanjutnya akan menggunakan peta berikut:
 
@@ -387,6 +393,13 @@ apt install wget unzip nginx php php-fpm -y
 
 Selanjutnya kita download file zip dari `Google Drive`, `unzip`, lalu pindahkan ke direktori `/var/www`. Kemudian, buat file konfigurasi untuk website, dan letakkan di `/etc/nginx/sites-available/modul-3`
 
+Hasil Pengerjaan:
+https://www.youtube.com/watch?v=83xgeoPRl9U&list=PLMXEXbfEMOWKX5JwmY8jEwW7iANhXtQuS&index=1
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/292f7baa-0d51-41b8-b439-c2e1cb63d8b6)
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/cd2053d4-43f3-4c87-a78e-20d0c4ea7550)
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/c3887b20-5685-4694-a4ad-7d7eff4cd8c5)
+
 ## Soal 7
 
 **Kepala suku dari Bredt Region memberikan resource server sebagai berikut:
@@ -402,6 +415,9 @@ Langkah untuk menguji penyeimbang Eisen, kita dapat menggunakan utilitas benchma
 Langkah selanjutnya, untuk membuat 1000 permintaan dengan 100 permintaan/detik, gunakan perintah berikut
 
 `ab -n 1000 -c 100 "http://10.7.2.2/"`
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/860b3dcf-9a02-4d80-8293-441020a13806)
+
 
 ## Soal 8
 **Karena diminta untuk menuliskan grimoire, buatlah analisis hasil testing dengan 200 request dan 10 request/second masing-masing algoritma Load Balancer dengan ketentuan sebagai berikut:
@@ -462,6 +478,8 @@ Selanjutnya, dengan menggunakan perintah ab, uji penyeimbang sebagai berikut
 `ab -n 200 -c 10 "http://10.7.2.2/"`
 
 Selanjutnya setelah dilakukan pengujian, catat penggunaan CPU setiap pekerja menggunakan htop dan hasil benchmark, lalu tambahkan ke grimoire
+
+
 
 ## Soal 9
 **Dengan menggunakan algoritma Round Robin, lakukan testing dengan menggunakan 3 worker, 2 worker, dan 1 worker sebanyak 100 request dengan 10 request/second, kemudian tambahkan grafiknya pada grimoire. (9)**
@@ -590,6 +608,9 @@ location / {
 Ketika sudah berhasil. Jika tidak memberikan kredensial yang benar saat membuka situs web menggunakan `lynx`, kami tidak akan mendapatkan akses ke situs web tersebut. Berikut cara masuk ke situs web menggunakan kredensial.
 
 `lynx -auth=netics:ajka16 http://10.7.2.2/`
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/abaa5784-0345-444f-a131-eaf6efe11323)
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/94bccf70-9cb4-4763-b171-803c9cfbf88e)
+
 
 ## Soal 11
 **Lalu buat untuk setiap request yang mengandung /its akan di proxy passing menuju halaman https://www.its.ac.id. (11) hint: (proxy_pass)**
@@ -630,7 +651,8 @@ Untuk melakukan pengujian, gunakan perintah berikut pada klien Revolte:
 ```bash
 lynx www.granz.channel.a16.com/its
 ```
-
+https://youtu.be/83xgeoPRl9U?si=axP58TjSpkbVoENy
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/80096dac-9577-4f10-b1c9-db420dc26ad4)
 
 ## Soal 12
 **Selanjutnya LB ini hanya boleh diakses oleh client dengan IP [Prefix IP].3.69, [Prefix IP].3.70, [Prefix IP].4.167, dan [Prefix IP].4.168. (12) hint: (fixed in dulu clinetnya)**
@@ -697,6 +719,11 @@ host Revolte {
 ```
 Dengan cara ini, klien Revolte akan selalu menerima alamat IP 10.7.3.69, memastikan konsistensi akses tanpa perlu menyesuaikan konfigurasi Nginx secara berulang.
 
+Hasil Pengerjaan:
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/cd335f86-ce3f-4cb1-b7b4-f0c45623a206)
+
+https://youtu.be/83xgeoPRl9U?si=axP58TjSpkbVoENy
+
 
 ## Soal 13
 **Karena para petualang kehabisan uang, mereka kembali bekerja untuk mengatur riegel.canyon.yyy.com.
@@ -731,7 +758,12 @@ FLUSH PRIVILEGES;
 Untuk memastikan konfigurasi berjalan dengan baik, lakukan pengecekan pada salah satu worker Laravel. Sebagai contoh, kita akan memeriksa pada worker Fern dengan perintah berikut:
 ```bash
 mariadb --host=10.7.2.1 --port=3306 --user=kelompoka16 --password=passworda16 dbkelompoka16 -e "SHOW DATABASES;"
+
+
 ```
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/d40e0b83-dd58-4e59-af5e-b48bf33337d4)
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/8a384f1f-0eea-4b9d-a1ca-01022323e4a4)
 
 ## Soal 14
 **Frieren, Flamme, dan Fern memiliki Riegel Channel sesuai dengan quest guide berikut. Jangan lupa melakukan instalasi PHP8.0 dan Composer (14)**
@@ -790,7 +822,10 @@ chown -R www-data.www-data /var/www/laravel-praktikum-jarkom/storage
 ```bash
 lynx localhost:[PORT]
 # Ganti [PORT] dengan 8001, 8002, atau 8003 sesuai setup nginx.
+
 ```
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/a1aa395e-1fa6-45f3-b003-f1ac9f631b0e)
+
 ## Soal 15
 **Riegel Channel memiliki beberapa endpoint yang harus ditesting sebanyak 100 request dengan 10 request/second. Tambahkan response dan hasil testing pada grimoire.
 POST /auth/register (15)**
@@ -807,6 +842,9 @@ Dari sii client Revolte, perintah Apache Benchmark dilakukan untuk testing:
 ```bash
 ab -n 100 -c 10 -p register.json -T application/json http://10.7.4.1:8001/api/auth/register
 ```
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/87434d78-362b-48a6-80c1-0e3ca1f156ec)
+
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/5d1691cc-5dbd-42da-ae3e-f50b1b875762)
 
 ## Soal 16
 **POST /auth/login (16)**
@@ -823,6 +861,7 @@ Dari sii client Revolte, perintah Apache Benchmark dilakukan untuk testing:
 ```bash
 ab -n 100 -c 10 -p login.json -T application/json http://10.7.4.1:8001/api/auth/login
 ```
+![Uploading image.png…]()
 
 
 ## Soal 17
@@ -838,6 +877,7 @@ Testing:
 ```bash
 ab -n 100 -c 10 -H "Authorization: Bearer $token" http://10.7.4.1:8001/api/me
 ```
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/21995f93-0112-4bbb-bc61-fbb71faee513)
 
 
 ## Soal 18
@@ -852,6 +892,9 @@ Kemudian token diekstrak dan disimpan dalam vairabelnya. Kemudian, Apache Benchm
 
 Testing:
 ab -n 100 -c 10 -H "Authorization: Bearer $token" http://10.7.4.1:8001/api/me
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/05e1366b-7241-46cb-a59e-5cb16bd7cf12)
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/64b8ad81-ab3f-4e08-a870-f40188d0e1f3)
+
 
 
 ## Soal 19
@@ -942,6 +985,11 @@ service php8.0-fpm restart
 
 ```
 Setiap skrip ini akan diuji dengan Apache Benchmark, mengirim 100 request dengan 10 request/detik, untuk menganalisis perbedaan performa antara konfigurasi ini. Analisis ini akan membantu dalam menentukan konfigurasi mana yang paling efektif untuk penanganan beban permintaan pada server. Hasil dari setiap konfigurasi ini akan memberikan data yang penting untuk memahami bagaimana penyesuaian PHP-FPM dapat mempengaruhi kinerja server dalam kondisi beban berbeda.
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/f58d8392-d5b4-4ad5-8f20-fefa2ccda497)
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/96d21a01-3c9f-4b11-b892-09beaac9b785)
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/8bc64a66-30d7-45c4-ba9a-65bddf4309f8)
+
+
 
 
 ## Soal 20
@@ -987,6 +1035,9 @@ server {
 service nginx restart
 
 ```
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/b80b0914-cd1e-46ac-9ceb-7e103a5bef7b)
+![image](https://github.com/herukurniawann/Jarkom-Modul-3-A16-2023/assets/121850356/888a7904-af61-474e-82e3-ed86ef577b0a)
+
 
 Peningkatan performa worker Laravel tidak hanya bergantung pada konfigurasi PHP-FPM, tetapi juga pada strategi load balancing yang digunakan. Dalam kasus ini, algoritma Least-Connection diimplementasikan pada load balancer Eisen. Algoritma ini bertujuan untuk mendistribusikan beban kerja secara lebih efisien dengan memprioritaskan server yang memiliki jumlah koneksi aktif paling sedikit. Dengan demikian, setiap request baru akan dialihkan ke server yang paling sedikit beban kerjanya, mengurangi kemungkinan beberapa server mengalami beban tinggi sementara yang lainnya kurang dimanfaatkan.
 
@@ -995,6 +1046,8 @@ Konfigurasi nginx untuk implementasi Least-Connection pada load balancer Eisen d
 Konfigurasi ini masih tetap menggunakan pengaturan PHP-FPM yang sebelumnya telah ditentukan, termasuk pm.max_children = 75, pm.start_servers = 10, pm.min_spare_servers = 5, dan pm.max_spare_servers = 20. Pengaturan ini, bersama dengan strategi load balancing yang baru, diharapkan dapat meningkatkan performa keseluruhan dari kluster server.
 
 Dengan penggunaan Least-Connection di load balancer, setiap server dalam kluster memiliki peluang yang lebih seimbang untuk menangani permintaan, mencegah situasi di mana beberapa server mungkin kelebihan beban sementara yang lainnya kurang dimanfaatkan.
+
+
 
 
 ## Kendala 
